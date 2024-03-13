@@ -27,17 +27,16 @@ export default async function PokemonPage({
         />
       </div>
       <h3>weight: {pokemon.weight}kg</h3>
-      <div className="flex-col">
+      <div className="flex flex-col items-center w-full">
         {pokemon.stats.map((statObj: any) => {
           const statName = statObj.stat.name;
           const statValue = statObj.base_stat;
           return (
             <div
-              className="flex items-stretch"
-              style={{ width: " 500px" }}
+              className="flex items-stretch w-full md:w-[500px]"
               key={statName}
             >
-              <h3 className="p-3 w-2/4">
+              <h3 className="py-3 w-[160px]">
                 {statName}: {statValue}
               </h3>
               <Progress className="w-2/4 m-auto" value={statValue} />
