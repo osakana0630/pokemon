@@ -1,4 +1,4 @@
-import { getJapanesePokemonName, getPokemon } from "@/lib/pokemonAPI";
+import { getPokemon } from "@/lib/pokemonAPI";
 import { PokemonImage } from "@/components/pokemon-image";
 import { Progress } from "@/components/ui/progress";
 
@@ -9,7 +9,6 @@ export default async function PokemonPage({
 }) {
   const { pokemonName } = params;
   const pokemon = await getPokemon(pokemonName);
-  const name = await getJapanesePokemonName(pokemonName);
 
   return (
     <>
