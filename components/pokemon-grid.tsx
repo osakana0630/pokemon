@@ -1,13 +1,7 @@
 import { Suspense } from "react";
 import { PokemonCard } from "@/components/pokemon-card";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { PokemonCardSkeleton } from "@/components/pokemon-card-skeleton";
+import { PokemonPagination } from "@/components/pokemon-pagination";
 
 interface PokemonGridProps {
   pokemonList: any[];
@@ -30,20 +24,7 @@ export function PokemonGrid({ pokemonList, searchParams }: PokemonGridProps) {
           </Suspense>
         ))}
       </div>
-
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href={`/?page=${page <= 1 ? 1 : page - 1}`}
-              className="text-lg"
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href={`/?page=${page + 1}`} className="text-lg" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <PokemonPagination page={page} />
     </>
   );
 }
