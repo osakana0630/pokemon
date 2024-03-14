@@ -1,9 +1,5 @@
-"use client";
-
-import { useState } from "react";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { PokemonCard } from "@/components/pokemon-card";
 import {
   Pagination,
@@ -12,54 +8,40 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { PokemonCardSkeleton } from "@/components/pokemon-card-skeleton";
 
 interface PokemonGridProps {
   pokemonList: any[];
+  searchParams: {
+    page: string;
+  };
 }
-export function PokemonGrid({ pokemonList }: PokemonGridProps) {
-  const params = useSearchParams();
-  const page = Number(params.get("page") ?? 1);
-  // const [searchText, setSearchText] = useState("");
-  //
-  // const searchFilter = (pokemonList: any) => {
-  //   return pokemonList.filter((pokemon: any) =>
-  //     pokemon.name.toLowerCase().includes(searchText.toLowerCase()),
-  //   );
-  // };
-  //
-  // const filteredPokemonList = searchFilter(pokemonList);
+export function PokemonGrid({ pokemonList, searchParams }: PokemonGridProps) {
+  const page = Number(searchParams.page ?? 1);
 
   return (
     <>
-      {/*<div>*/}
-      {/*  <h3 className="text-2xl py-6 text-center">Search For Your Pokemon!</h3>*/}
-      {/*  <div className="grid w-full max-w-sm items-center gap-1.5">*/}
-      {/*    <Label htmlFor="pokemonName">Pokemon Name</Label>*/}
-      {/*    <Input*/}
-      {/*      type="text"*/}
-      {/*      value={searchText}*/}
-      {/*      id="pokemonName"*/}
-      {/*      placeholder="Charizard, Pikachu, etc."*/}
-      {/*      onChange={(e) => setSearchText(e.target.value)}*/}
-      {/*      autoComplete="off"*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*  <h3 className="text-3xl pt-12 pb-6 text-center">Pokemon Collection</h3>*/}
-      {/*</div>*/}
-
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-3 lg:text-left">
         {pokemonList.map((pokemon: any) => (
-          <PokemonCard pokemon={pokemon} key={pokemon.name + "Card"} />
+          <Suspense key={pokemon.name} fallback={<PokemonCardSkeleton />}>
+            <PokemonCard
+              pokemonName={pokemon.name}
+              key={pokemon.name + "Card"}
+            />
+          </Suspense>
         ))}
       </div>
 
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href={`/?page=${page <= 1 ? 1 : page - 1}`} />
+            <PaginationPrevious
+              href={`/?page=${page <= 1 ? 1 : page - 1}`}
+              prefetch
+            />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext href={`/?page=${page + 1}`} />
+            <PaginationNext href={`/?page=${page + 1}`} prefetch />
           </PaginationItem>
         </PaginationContent>
       </Pagination>

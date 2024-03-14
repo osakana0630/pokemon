@@ -5,18 +5,23 @@ type GetPokemonListParams = {
   offset: number;
 };
 export async function getPokemonList({ limit, offset }: GetPokemonListParams) {
+  // 5秒遅延させる
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const response = await fetch(
     `${POKEMON_API}pokemon?limit=${limit}&offset=${offset}`,
   );
   const data = await response.json();
 
-  const result = [];
-  for (const pokemon of data.results) {
-    const pokemonObj = await getPokemon(pokemon.name);
-    result.push({ ...pokemon, ...pokemonObj });
-  }
+  return data.results;
 
-  return result;
+  // const promises = data.results.map(async (pokemon: any) => {
+  //   const pokemonObj = await getPokemon(pokemon.name);
+  //   console.log(pokemonObj.id);
+  //   return { ...pokemon, ...pokemonObj };
+  // });
+
+  // return await Promise.all(promises);
 }
 
 export async function getPokemon(name: string) {

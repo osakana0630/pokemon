@@ -1,5 +1,5 @@
-import { PokemonGrid } from "@/components/pokemon-grid";
-import { getPokemonList } from "@/lib/pokemonAPI";
+import { Pokedex } from "@/components/pages/pokedex";
+import { Suspense } from "react";
 
 interface SearchParamsProps {
   searchParams: {
@@ -7,11 +7,10 @@ interface SearchParamsProps {
   };
 }
 
-export default async function Home({ searchParams }: SearchParamsProps) {
-  const currentPage = Number(searchParams.page ?? 1);
-  const sizePerPage = 30;
-  const offset = (currentPage - 1) * sizePerPage;
-
-  const pokemonList = await getPokemonList({ offset, limit: sizePerPage });
-  return <PokemonGrid pokemonList={pokemonList} />;
+export default function PokedexPage({ searchParams }: SearchParamsProps) {
+  return (
+    // <Suspense fallback={<div>Loading...</div>}>
+    <Pokedex searchParams={searchParams} />
+    // </Suspense>
+  );
 }
