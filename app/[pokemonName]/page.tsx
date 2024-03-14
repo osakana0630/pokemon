@@ -3,6 +3,7 @@ import { PokemonImage } from "@/components/pokemon-image";
 import { Progress } from "@/components/ui/progress";
 import { notFound } from "next/navigation";
 import { Stats } from "@/constants/stat";
+import { Badge } from "@/components/ui/badge";
 
 export default async function PokemonPage({
   params,
@@ -34,31 +35,35 @@ export default async function PokemonPage({
         </div>
       </div>
 
-      <div>
-        <p>高さ: {pokemon.height}m</p>
-        <p>体重: {pokemon.weight}kg</p>
-      </div>
-
       <div className="flex flex-col items-center w-full">
         {pokemon.stats.map((statObj) => {
           const statName = statObj.stat.name;
           const statValue = statObj.base_stat;
           return (
-            <div
-              className="flex items-stretch w-full md:w-[500px]"
-              key={statName}
-            >
-              <h3 className="py-3 w-[160px]">
-                {Stats[statName]}: {statValue}
+            <div className="flex  w-full" key={statName}>
+              <h3 className="py-2 w-[115px]">
+                <Badge variant="secondary">{Stats[statName]}</Badge>
               </h3>
-              <Progress className="w-2/4 m-auto" value={statValue} />
+              <Progress className="w-[65%] my-auto" value={statValue} />
             </div>
           );
         })}
+        <div className="flex items-stretch w-full">
+          <h3 className="py-2 w-[115px]">
+            <Badge variant="secondary">たかさ</Badge>
+          </h3>
+          <div className="my-auto">{pokemon.height}m</div>
+        </div>
+        <div className="flex items-stretch w-full">
+          <h3 className="py-2 w-[115px]">
+            <Badge variant="secondary">おもさ</Badge>
+          </h3>
+          <div className="my-auto">{pokemon.weight}kg</div>
+        </div>
       </div>
 
-      <div className="border border-gray-200 dark:border-gray-500 border-x-8 border-x-amber-300 p-4 h-20">
-        <p className="text-xl">{pokemon.flavorText}</p>
+      <div className="border dark:border-gray-500 border-x-8 border-amber-300 p-4 min-h-20">
+        {pokemon.flavorText}
       </div>
     </div>
   );
