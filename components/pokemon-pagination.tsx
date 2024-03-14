@@ -21,9 +21,12 @@ export function PokemonPagination({ page }: PokemonPaginationProps) {
             className="text-lg"
           />
         </PaginationItem>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: 3 }).map((_, index) => (
           <PaginationItem key={index}>
-            <PaginationLink href={`/?page=${page + index + 1}`}>
+            <PaginationLink
+              href={`/?page=${page + index + 1}`}
+              className="text-lg"
+            >
               {page + index + 1}
             </PaginationLink>
           </PaginationItem>
