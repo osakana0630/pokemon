@@ -25,10 +25,6 @@ export default async function PokemonPage({
   return (
     <div className="flex flex-col gap-10 items-center justify-center w-full lg:w-1/2">
       <div>
-        <h2 className="text-4xl text-bold text-center">
-          <span className="text-gray-600 mr-2">{pokemon.id}.</span>
-          {pokemon.jpName}
-        </h2>
         <div
           className="m-4 mb-2"
           style={{
@@ -39,6 +35,7 @@ export default async function PokemonPage({
         >
           <PokemonImage image={pokemon.img} name={pokemonName} />
         </div>
+        <h2 className="text-4xl text-bold text-center">{pokemon.jpName}</h2>
       </div>
 
       <div className="flex flex-col items-center w-full lg:w-4/5">
