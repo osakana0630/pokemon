@@ -20,17 +20,16 @@ export async function getPokemonList({ limit, offset }: GetPokemonListParams) {
 }
 
 export async function getPokemon(name: string): Promise<IPokemon | null> {
-  const response = await fetch(`${POKEMON_API}pokemon/${name}`);
+  const res = await fetch(`${POKEMON_API}pokemon/${name}`);
+  if (!res.ok) return null;
+  const data = await res.json();
 
-  if (!response.ok) {
-    return null;
-  }
-
-  const data = await response.json();
+  const jpName = await getJapanesePokemonName(name);
 
   return {
     id: data.id,
     name: data.name,
+    jpName: jpName || data.name,
     height: data.height,
     weight: data.weight,
     officialImg: data.sprites?.front_default || "",
@@ -40,8 +39,9 @@ export async function getPokemon(name: string): Promise<IPokemon | null> {
 }
 
 export async function getJapanesePokemonName(name: string) {
-  const response = await fetch(`${POKEMON_API}pokemon-species/${name}`);
-  const data = await response.json();
+  const res = await fetch(`${POKEMON_API}pokemon-species/${name}`);
+  if (!res.ok) return null;
+  const data = await res.json();
   const jpName = data.names.find(
     (nameObj: any) => nameObj.language.name === "ja-Hrkt",
   ).name;

@@ -26,10 +26,10 @@ export async function PokemonCard({ pokemonName }: PokemonCardProps) {
         <PokemonImage image={pokemon.img} name={pokemon.name} />
       </div>
       <h2 className="text-sm md:text-xl font-semibold text-center">
-        <span className="text-xs md:text-lg text-gray-600 mr-2">
-          No.{pokemon.id}
+        <span className="text-xs md:text-lg text-gray-600 mr-1">
+          {pokemon.id}.
         </span>
-        {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+        {pokemon.jpName}
       </h2>
     </Link>
   );

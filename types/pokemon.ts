@@ -9,6 +9,7 @@ type IStat = {
 export type IPokemon = {
   id: number;
   name: string;
+  jpName: string;
   // 身長
   height: number;
   // 体重

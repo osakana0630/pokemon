@@ -16,7 +16,7 @@ export default async function PokemonPage({
 
   return (
     <>
-      <h1 className="text-4xl text-bold  pt-4">{pokemonName}</h1>
+      <h1 className="text-4xl text-bold  pt-4">{pokemon.jpName}</h1>
       <div
         className="m-4"
         style={{
