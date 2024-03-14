@@ -24,13 +24,12 @@ export async function getPokemon(name: string): Promise<IPokemon | null> {
   if (!res.ok) return null;
   const data = await res.json();
 
-  const speciesData = await getPokemonSpecies(name);
-  const jpName = getJapanesePokemonName(speciesData.names);
-
-  const flavorText =
-    speciesData.flavor_text_entries.find(
-      (entry: any) => entry.language.name === "ja",
-    )?.flavor_text || "";
+  // nameだと一部のポケモンで404になるのでidを指定する
+  const speciesData = await getPokemonSpecies(data.id);
+  const jpName = getJapanesePokemonName(speciesData?.names || []);
+  const flavorTextObj = (speciesData?.flavor_text_entries || []).find(
+    (entry: any) => entry.language.name === "ja",
+  );
 
   return {
     id: data.id,
@@ -41,7 +40,7 @@ export async function getPokemon(name: string): Promise<IPokemon | null> {
     officialImg: data.sprites?.front_default || "",
     img: data.sprites?.other["official-artwork"]?.front_default || "",
     stats: data.stats,
-    flavorText: flavorText.replace(/\s+/g, ""),
+    flavorText: flavorTextObj?.flavor_text?.replace(/\s+/g, "") || "",
   };
 }
 
@@ -52,9 +51,10 @@ export async function getPokemonSpecies(name: string) {
 }
 
 function getJapanesePokemonName(names: any[]): string {
-  const jpName = names.find(
-    (nameObj: any) => nameObj.language.name === "ja-Hrkt",
-  ).name;
+  const nameObj = names.find(
+    (nameObj: any) =>
+      nameObj.language.name === "ja-Hrkt" || nameObj.language.name === "ja",
+  );
 
-  return jpName;
+  return nameObj?.name || "";
 }
