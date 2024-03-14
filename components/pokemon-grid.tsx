@@ -20,7 +20,7 @@ export function PokemonGrid({ pokemonList, searchParams }: PokemonGridProps) {
 
   return (
     <>
-      <div className="mb-8 grid text-center grid-cols-2 lg:mb-0 lg:grid-cols-3">
+      <div className="mb-8 grid text-center grid-cols-2 lg:mb-0 md:grid-cols-3 lg:grid-cols-5">
         {pokemonList.map((pokemon: any) => (
           <Suspense key={pokemon.name} fallback={<PokemonCardSkeleton />}>
             <PokemonCard

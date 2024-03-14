@@ -12,16 +12,15 @@ export async function PokemonCard({ pokemonName }: PokemonCardProps) {
   return (
     <Link
       href={pokemon.name}
-      className="group rounded-lg border border-transparent px-5 py-4 m-3 transition-colors dark:border-gray-500 hover:border-gray-300
-       w-[40%] h-[300px]"
+      className="group rounded-lg border border-transparent px-5 py-4 m-3 transition-colors dark:border-gray-500 hover:border-gray-300"
     >
       <div
         className="m-4"
         style={{
           position: "relative",
           margin: "0 auto",
-          width: "140px",
-          height: "140px",
+          width: "120px",
+          height: "120px",
         }}
       >
         <PokemonImage image={pokemon.img} name={pokemon.name} />
