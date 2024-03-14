@@ -16,15 +16,20 @@ export default async function PokemonPage({
     notFound();
   }
 
+  const basicInfo = [
+    { label: "たかさ", value: `${pokemon.height}m` },
+    { label: "おもさ", value: `${pokemon.weight}kg` },
+  ];
+
   return (
-    <div className="flex flex-col gap-10 items-center justify-center">
+    <div className="flex flex-col gap-10 items-center justify-center w-full lg:w-1/2">
       <div>
         <h2 className="text-4xl text-bold text-center">
           <span className="text-gray-600 mr-2">{pokemon.id}.</span>
           {pokemon.jpName}
         </h2>
         <div
-          className="m-4"
+          className="m-4 mb-2"
           style={{
             position: "relative",
             width: "300px",
@@ -35,35 +40,35 @@ export default async function PokemonPage({
         </div>
       </div>
 
-      <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col items-center w-full lg:w-4/5">
         {pokemon.stats.map((statObj) => {
           const statName = statObj.stat.name;
           const statValue = statObj.base_stat;
           return (
-            <div className="flex  w-full" key={statName}>
-              <h3 className="py-2 w-[115px]">
-                <Badge variant="secondary">{Stats[statName]}</Badge>
+            <div className="flex justify-center w-full" key={statName}>
+              <h3 className="py-2 w-1/4">
+                <Badge variant="secondary" className="text-sm lg:text-lg">
+                  {Stats[statName]}
+                </Badge>
               </h3>
-              <Progress className="w-[65%] my-auto" value={statValue} />
+              <Progress className="w-3/4 my-auto" value={statValue} />
             </div>
           );
         })}
-        <div className="flex items-stretch w-full">
-          <h3 className="py-2 w-[115px]">
-            <Badge variant="secondary">たかさ</Badge>
-          </h3>
-          <div className="my-auto">{pokemon.height}m</div>
-        </div>
-        <div className="flex items-stretch w-full">
-          <h3 className="py-2 w-[115px]">
-            <Badge variant="secondary">おもさ</Badge>
-          </h3>
-          <div className="my-auto">{pokemon.weight}kg</div>
-        </div>
+        {basicInfo.map(({ label, value }) => (
+          <div className="flex justify-center w-full" key={label}>
+            <h3 className="py-2 w-1/4">
+              <Badge variant="secondary" className="text-sm lg:text-lg">
+                {label}
+              </Badge>
+            </h3>
+            <div className="w-3/4 my-auto text-lg">{value}</div>
+          </div>
+        ))}
       </div>
 
-      <div className="border dark:border-gray-500 border-x-8 border-amber-300 p-4 min-h-20">
-        {pokemon.flavorText}
+      <div className="border dark:border-gray-500 border-x-8 border-amber-300 p-4 min-h-20 w-full lg:w-4/5">
+        {pokemon.flavorText || "特になし"}
       </div>
     </div>
   );

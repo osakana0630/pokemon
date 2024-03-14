@@ -28,7 +28,8 @@ export async function getPokemon(name: string): Promise<IPokemon | null> {
   const speciesData = await getPokemonSpecies(data.id);
   const jpName = getJapanesePokemonName(speciesData?.names || []);
   const flavorTextObj = (speciesData?.flavor_text_entries || []).find(
-    (entry: any) => entry.language.name === "ja",
+    (entry: any) =>
+      entry.language.name === "ja" || entry.language.name === "ja-Hrkt",
   );
 
   return {
