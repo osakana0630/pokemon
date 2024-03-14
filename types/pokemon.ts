@@ -1,8 +1,11 @@
+import { Stats } from "@/constants/stat";
+
+type IStatNames = keyof typeof Stats;
 type IStat = {
   base_stat: number;
   effort: number;
   stat: {
-    name: string;
+    name: IStatNames;
   };
 };
 
@@ -19,4 +22,6 @@ export type IPokemon = {
   img: string;
   // ステータス
   stats: IStat[];
+  // フレーバーテキスト
+  flavorText: "";
 };

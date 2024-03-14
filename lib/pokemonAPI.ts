@@ -24,27 +24,37 @@ export async function getPokemon(name: string): Promise<IPokemon | null> {
   if (!res.ok) return null;
   const data = await res.json();
 
-  const jpName = await getJapanesePokemonName(name);
+  const speciesData = await getPokemonSpecies(name);
+  const jpName = getJapanesePokemonName(speciesData.names);
+
+  const flavorText =
+    speciesData.flavor_text_entries.find(
+      (entry: any) => entry.language.name === "ja",
+    )?.flavor_text || "";
 
   return {
     id: data.id,
     name: data.name,
     jpName: jpName || data.name,
-    height: data.height,
-    weight: data.weight,
+    height: data.height / 10,
+    weight: data.weight / 10,
     officialImg: data.sprites?.front_default || "",
     img: data.sprites?.other["official-artwork"]?.front_default || "",
     stats: data.stats,
+    flavorText: flavorText.replace(/\s+/g, ""),
   };
 }
 
-export async function getJapanesePokemonName(name: string) {
+export async function getPokemonSpecies(name: string) {
   const res = await fetch(`${POKEMON_API}pokemon-species/${name}`);
   if (!res.ok) return null;
-  const data = await res.json();
-  const jpName = data.names.find(
+  return await res.json();
+}
+
+function getJapanesePokemonName(names: any[]): string {
+  const jpName = names.find(
     (nameObj: any) => nameObj.language.name === "ja-Hrkt",
   ).name;
 
-  return jpName || name;
+  return jpName;
 }
