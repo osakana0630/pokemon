@@ -12,7 +12,7 @@ export async function PokemonCard({ pokemonName }: PokemonCardProps) {
   return (
     <Link
       href={pokemon.name}
-      className="group rounded-lg border border-transparent px-5 py-4 m-3 transition-colors dark:border-gray-500 hover:border-gray-300"
+      className="group rounded-lg border border-transparent px-5 py-4 m-3 transition-colors border-gray-200 dark:border-gray-500 hover:border-gray-300"
     >
       <div
         className="m-4"
