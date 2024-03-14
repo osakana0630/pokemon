@@ -1,5 +1,4 @@
 import { Pokedex } from "@/components/pages/pokedex";
-import { Suspense } from "react";
 
 interface SearchParamsProps {
   searchParams: {
@@ -8,9 +7,5 @@ interface SearchParamsProps {
 }
 
 export default function PokedexPage({ searchParams }: SearchParamsProps) {
-  return (
-    // <Suspense fallback={<div>Loading...</div>}>
-    <Pokedex searchParams={searchParams} />
-    // </Suspense>
-  );
+  return <Pokedex searchParams={searchParams} />;
 }

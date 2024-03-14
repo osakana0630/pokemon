@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import { PokemonCard } from "@/components/pokemon-card";
 import {
   Pagination,
@@ -21,7 +20,7 @@ export function PokemonGrid({ pokemonList, searchParams }: PokemonGridProps) {
 
   return (
     <>
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-3 lg:text-left">
+      <div className="mb-8 grid text-center grid-cols-2 lg:mb-0 lg:grid-cols-3">
         {pokemonList.map((pokemon: any) => (
           <Suspense key={pokemon.name} fallback={<PokemonCardSkeleton />}>
             <PokemonCard
@@ -37,11 +36,11 @@ export function PokemonGrid({ pokemonList, searchParams }: PokemonGridProps) {
           <PaginationItem>
             <PaginationPrevious
               href={`/?page=${page <= 1 ? 1 : page - 1}`}
-              prefetch
+              className="text-lg"
             />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext href={`/?page=${page + 1}`} prefetch />
+            <PaginationNext href={`/?page=${page + 1}`} className="text-lg" />
           </PaginationItem>
         </PaginationContent>
       </Pagination>

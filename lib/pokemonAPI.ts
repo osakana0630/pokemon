@@ -1,3 +1,5 @@
+import { IPokemon } from "@/types/pokemon";
+
 const POKEMON_API = "https://pokeapi.co/api/v2/";
 
 type GetPokemonListParams = {
@@ -5,28 +7,36 @@ type GetPokemonListParams = {
   offset: number;
 };
 export async function getPokemonList({ limit, offset }: GetPokemonListParams) {
-  // 5秒遅延させる
-  // await new Promise((resolve) => setTimeout(resolve, 1000));
-
   const response = await fetch(
     `${POKEMON_API}pokemon?limit=${limit}&offset=${offset}`,
   );
+  if (!response.ok) {
+    return [];
+  }
+
   const data = await response.json();
 
   return data.results;
-
-  // const promises = data.results.map(async (pokemon: any) => {
-  //   const pokemonObj = await getPokemon(pokemon.name);
-  //   console.log(pokemonObj.id);
-  //   return { ...pokemon, ...pokemonObj };
-  // });
-
-  // return await Promise.all(promises);
 }
 
-export async function getPokemon(name: string) {
+export async function getPokemon(name: string): Promise<IPokemon | null> {
   const response = await fetch(`${POKEMON_API}pokemon/${name}`);
-  return await response.json();
+
+  if (!response.ok) {
+    return null;
+  }
+
+  const data = await response.json();
+
+  return {
+    id: data.id,
+    name: data.name,
+    height: data.height,
+    weight: data.weight,
+    officialImg: data.sprites?.front_default || "",
+    img: data.sprites?.other["official-artwork"]?.front_default || "",
+    stats: data.stats,
+  };
 }
 
 export async function getJapanesePokemonName(name: string) {

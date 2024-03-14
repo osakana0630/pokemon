@@ -1,6 +1,7 @@
 import { getPokemon } from "@/lib/pokemonAPI";
 import { PokemonImage } from "@/components/pokemon-image";
 import { Progress } from "@/components/ui/progress";
+import { redirect, notFound } from "next/navigation";
 
 export default async function PokemonPage({
   params,
@@ -9,6 +10,9 @@ export default async function PokemonPage({
 }) {
   const { pokemonName } = params;
   const pokemon = await getPokemon(pokemonName);
+  if (pokemon === null) {
+    notFound();
+  }
 
   return (
     <>
@@ -21,10 +25,7 @@ export default async function PokemonPage({
           height: "300px",
         }}
       >
-        <PokemonImage
-          image={pokemon.sprites.other["official-artwork"].front_default}
-          name={pokemonName}
-        />
+        <PokemonImage image={pokemon.img} name={pokemonName} />
       </div>
       <h3>weight: {pokemon.weight}kg</h3>
       <div className="flex flex-col items-center w-full">
