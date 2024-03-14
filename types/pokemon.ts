@@ -1,4 +1,5 @@
 import { Stats } from "@/constants/stat";
+import { Types } from "@/constants/type";
 
 type IStatNames = keyof typeof Stats;
 type IStat = {
@@ -8,6 +9,8 @@ type IStat = {
     name: IStatNames;
   };
 };
+
+export type ITypeNames = keyof typeof Types;
 
 export type IPokemon = {
   id: number;
@@ -24,4 +27,5 @@ export type IPokemon = {
   stats: IStat[];
   // フレーバーテキスト
   flavorText: "";
+  types: ITypeNames[];
 };

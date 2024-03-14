@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { notFound } from "next/navigation";
 import { Stats } from "@/constants/stat";
 import { Badge } from "@/components/ui/badge";
+import { Types } from "@/constants/type";
 
 export default async function PokemonPage({
   params,
@@ -65,6 +66,21 @@ export default async function PokemonPage({
             <div className="w-3/4 my-auto text-lg">{value}</div>
           </div>
         ))}
+
+        <div className="flex justify-center w-full">
+          <h3 className="py-2 w-1/4">
+            <Badge variant="secondary" className="text-sm lg:text-lg">
+              タイプ
+            </Badge>
+          </h3>
+          <div className="w-3/4 my-auto text-lg">
+            {pokemon.types.map((type) => (
+              <Badge key={type} variant="outline" className="mr-2">
+                {Types[type].name}
+              </Badge>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="border dark:border-gray-500 border-x-8 border-amber-300 p-4 min-h-20 w-full lg:w-4/5">

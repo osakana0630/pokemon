@@ -1,4 +1,5 @@
 import { IPokemon } from "@/types/pokemon";
+import { Types } from "@/constants/type";
 
 const POKEMON_API = "https://pokeapi.co/api/v2/";
 
@@ -24,6 +25,7 @@ export async function getPokemon(name: string): Promise<IPokemon | null> {
   if (!res.ok) return null;
   const data = await res.json();
 
+  const pokemonTypes = data.types.map((type: any) => type.type.name);
   // nameだと一部のポケモンで404になるのでidを指定する
   const speciesData = await getPokemonSpecies(data.id);
   const jpName = getJapanesePokemonName(speciesData?.names || []);
@@ -42,6 +44,7 @@ export async function getPokemon(name: string): Promise<IPokemon | null> {
     img: data.sprites?.other["official-artwork"]?.front_default || "",
     stats: data.stats,
     flavorText: flavorTextObj?.flavor_text?.replace(/\s+/g, "") || "",
+    types: pokemonTypes,
   };
 }
 
