@@ -8,7 +8,7 @@ interface SearchParamsProps {
 }
 export async function Pokedex({ searchParams }: SearchParamsProps) {
   const currentPage = Number(searchParams.page ?? 1);
-  const pokemonPerPage = 21;
+  const pokemonPerPage = 30;
   const offset = (currentPage - 1) * pokemonPerPage;
   const pokemonList = await getPokemonList({ offset, limit: pokemonPerPage });
 
